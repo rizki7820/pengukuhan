@@ -27,7 +27,7 @@
 
         <div class="bg-white px-4 py-2 rounded-xl shadow">
             <p class="text-sm text-gray-500">
-                Auto Refresh 10 Detik
+                Auto Refresh 15 Detik
             </p>
         </div>
 
@@ -233,61 +233,67 @@ $kelasList = collect($data)
 
                         </td>
 
-                        <!-- JAM -->
-                        <td class="p-4 text-gray-600">
+                        <!-- JAM SISWA -->
+<td class="p-4 text-gray-600">
 
-                            @if(!empty($row['jam_siswa']))
+    @if(
+        !empty($row['jam_siswa']) &&
+        strtotime($row['jam_siswa'])
+    )
 
-                                {{ \Carbon\Carbon::parse($row['jam_siswa'])->format('H:i:s') }}
+        {{ $row['jam_siswa'] }}
 
-                            @else
+    @else
 
-                                -
+        -
 
-                            @endif
+    @endif
 
-                        </td>
+</td>
 
-                        <!-- NAMA ORTU -->
-                        <td class="p-4 text-gray-700">
+<!-- NAMA ORTU -->
+<td class="p-4 text-gray-700">
 
-                            {{ $row['nama_ortu'] ?? '-' }}
+    {{ $row['nama_ortu'] ?? '-' }}
 
-                        </td>
+</td>
 
-                        <!-- STATUS ORTU -->
-                        <td class="p-4">
+<!-- STATUS ORTU -->
+<td class="p-4">
 
-                            @if(($row['status_ortu'] ?? '') == '✔')
+    @if(($row['status_ortu'] ?? '') == '✔')
 
-                                <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold">
-                                    ✔ Hadir
-                                </span>
+        <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold">
+            ✔ Hadir
+        </span>
 
-                            @else
+    @else
 
-                                <span class="bg-red-100 text-red-600 px-3 py-1 rounded-full text-xs font-semibold">
-                                    Belum
-                                </span>
+        <span class="bg-red-100 text-red-600 px-3 py-1 rounded-full text-xs font-semibold">
+            Belum
+        </span>
 
-                            @endif
+    @endif
 
-                        </td>
+</td>
 
-                        <!-- JAM Ortu -->
-                        <td class="p-4 text-gray-600">
+<!-- JAM ORTU -->
+<td class="p-4 text-gray-600">
 
-                            @if(!empty($row['jam_ortu']))
+    @if(
+        !empty($row['jam_ortu']) &&
+        strtotime($row['jam_ortu'])
+    )
 
-                                {{ \Carbon\Carbon::parse($row['jam_ortu'])->format('H:i:s') }}
+        {{ $row['jam_ortu'] }}
 
-                            @else
+    @else
 
-                                -
+        -
 
-                            @endif
+    @endif
 
-                        </td>
+</td>
 
                     </tr>
 
@@ -457,7 +463,7 @@ filterKelas.addEventListener('change', function () {
 </script>
 
 <!-- AUTO REFRESH -->
-<meta http-equiv="refresh" content="10">
+<meta http-equiv="refresh" content="15">
 
 </body>
 </html>

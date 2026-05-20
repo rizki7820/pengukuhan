@@ -9,7 +9,7 @@ class AbsensiController extends Controller
     public function index()
 {
     $response = Http::withoutVerifying()
-        ->get('https://script.google.com/macros/s/AKfycbwLEkuPdRCRUS33sCfxdobBv2SHLUqPzsN8cY22qy-ooVLjM61UPqdVDklZqfNDCGlz/exec?mode=api');
+        ->get('https://script.google.com/macros/s/AKfycbyc5cQZ48jjnXILg1NsPc6qXPoR4VXT9w5746KniKdZgJbXtUsKUbcs-jS8uaJRVnMt/exec?mode=api');
 
     $data = json_decode($response->body(), true);
 
