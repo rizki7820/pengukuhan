@@ -1,58 +1,249 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📌 Sistem Absensi QR Code
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistem absensi berbasis:
 
-## About Laravel
+- Google Sheets
+- Google Apps Script
+- QR Code
+- Laravel Dashboard
+- Tailwind CSS
+- Chart.js
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Mendukung:
+- Absensi siswa
+- Absensi orang tua
+- QR Code otomatis
+- Dashboard realtime
+- Filter kelas
+- Statistik kehadiran
+- Kuota absensi
+- Log history absensi
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+# 🚀 Fitur
 
-## Learning Laravel
+## ✅ Fitur Utama
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- QR Code otomatis untuk siswa
+- QR Code otomatis untuk orang tua
+- Dashboard admin modern
+- Statistik realtime
+- Filter per kelas
+- Auto refresh dashboard
+- Log history scan QR
+- Kuota scan
+- Pembatasan tanggal dan jam absensi
+- API Google Apps Script untuk Laravel
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+# 🧩 Teknologi
 
-## Agentic Development
+## Backend
+- PHP Laravel
+- Google Apps Script
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Frontend
+- Tailwind CSS
+- Chart.js
 
-```bash
-composer require laravel/boost --dev
+## Database
+- Google Sheets
 
-php artisan boost:install
-```
+---
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+# 📂 Struktur Data Google Sheets
 
-## Contributing
+| Kolom | Isi |
+|---|---|
+| A | Nama Siswa |
+| B | Kelas |
+| C | Status Siswa |
+| D | Jam Terakhir |
+| E | Kuota Siswa |
+| F | Total Absen Siswa |
+| G | Link Absensi Siswa |
+| H | QR Code Siswa |
+| I | Nama Ortu |
+| J | Status Ortu |
+| K | Kuota Ortu |
+| L | Total Absen Ortu |
+| M | Link Absensi Ortu |
+| N | QR Code Ortu |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+# 🔥 Formula Google Sheets
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Link Absensi Siswa
 
-## Security Vulnerabilities
+```excel
+=IF(A2=""; ""; 
+"https://script.google.com/macros/s/XXXX/exec?tipe=siswa&nama=" & ENCODEURL(A2) & "&kelas=" & ENCODEURL(B2))
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+QR Code Siswa
+=IMAGE("https://quickchart.io/qr?text=" & ENCODEURL(G2))
 
-## License
+Link Absensi Ortu
+=IF(I2=""; ""; 
+"https://script.google.com/macros/s/XXXX/exec?tipe=ortu&nama=" & ENCODEURL(A2) & "&kelas=" & ENCODEURL(B2))
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+QR Code Ortu
+=IMAGE("https://quickchart.io/qr?text=" & ENCODEURL(M2))
+
+⚙️ Setup Google Apps Script
+1. Buka Google Sheets
+
+Klik:
+
+Extensions → Apps Script
+2. Paste Script
+
+Masukkan script Apps Script.
+
+3. Deploy Web App
+
+Klik:
+
+Deploy → New Deployment
+
+Setting:
+
+Execute as: Me
+Who has access: Anyone
+
+Lalu copy URL deployment.
+
+🔥 API Mode
+
+Digunakan Laravel untuk mengambil data realtime.
+
+Contoh:
+
+https://script.google.com/macros/s/XXXX/exec?mode=api
+🖥️ Setup Laravel
+Install Laravel
+composer create-project laravel/laravel absensi-qrcode
+Jalankan Laravel
+php artisan serve
+📦 Controller Laravel
+
+Tambahkan:
+
+use Illuminate\Support\Facades\Http;
+Contoh Controller
+public function index()
+{
+    $response = Http::withoutVerifying()
+        ->get('https://script.google.com/macros/s/XXXX/exec?mode=api');
+
+    $data = json_decode($response->body(), true);
+
+    return view('admin.dashboard', [
+        'data' => $data ?? []
+    ]);
+}
+🎨 UI Dashboard
+
+Dashboard menggunakan:
+
+Tailwind CSS
+Chart.js
+Filter kelas
+Statistik realtime
+Tabel realtime
+📊 Statistik Dashboard
+Total Data
+Siswa Hadir
+Ortu Hadir
+Belum Hadir
+🔍 Filter Kelas
+
+Dashboard mendukung filter:
+
+XIIA
+XIIB
+XI TKJ
+dll
+📈 Chart
+
+Menggunakan Doughnut Chart dari Chart.js.
+
+🔐 Pembatasan Waktu QR
+
+QR dapat dibatasi:
+
+tanggal tertentu
+jam tertentu
+
+Contoh:
+
+var jamMulai = "08:00";
+var jamSelesai = "10:00";
+📝 Log History
+
+Setiap scan akan masuk ke sheet:
+
+Log
+
+Data:
+
+nama
+kelas
+tipe absensi
+jam scan
+🔄 Auto Refresh
+
+Dashboard refresh otomatis setiap 10 detik.
+
+<meta http-equiv="refresh" content="10">
+📌 Alur Sistem
+Siswa
+Scan QR
+Masuk ke Apps Script
+Data tersimpan
+Dashboard update realtime
+Orang Tua
+Scan QR khusus ortu
+Sistem cek kuota
+Status ortu update
+Dashboard update realtime
+🛡️ Validasi
+
+Sistem mendukung:
+
+Validasi kuota
+Validasi tanggal
+Validasi jam
+Validasi siswa
+Validasi kelas
+📈 Pengembangan Selanjutnya
+
+Fitur yang bisa ditambahkan:
+
+Login admin
+Export PDF
+Export Excel
+Dark mode
+GPS lokasi
+QR expire
+Rekap per kelas
+Grafik realtime
+Notifikasi WhatsApp
+👨‍💻 Author
+
+Project dibuat menggunakan:
+
+Laravel
+Google Sheets
+Google Apps Script
+Tailwind CSS
+Chart.js
+⭐ Support
+
+Jika project ini membantu:
+
+⭐ Star repository
+🍴 Fork repository
+📢 Share project
