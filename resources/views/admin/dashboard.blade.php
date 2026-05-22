@@ -236,7 +236,7 @@ $kelasList = collect($data)
                         <!-- JAM SISWA -->
 <td class="p-4 text-gray-600">
 @if(!empty($row['jam_siswa']))
-    {{ trim($row['jam_siswa']) }}
+    {{ substr($row['jam_siswa'], 11, 8) }}
 @else
     -
 @endif
@@ -271,7 +271,7 @@ $kelasList = collect($data)
 <!-- JAM ORTU -->
 <td class="p-4 text-gray-600">
 @if(!empty($row['jam_ortu']))
-    {{ trim($row['jam_ortu']) }}
+    {{ substr($row['jam_ortu'], 11, 8) }}
 @else
     -
 @endif
