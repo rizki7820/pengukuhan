@@ -236,18 +236,21 @@ $kelasList = collect($data)
                         <!-- JAM SISWA -->
 <td class="p-4 text-gray-600">
 
-    @if(
-        !empty($row['jam_siswa']) &&
-        strtotime($row['jam_siswa'])
-    )
+@if(!empty($row['jam_siswa']))
 
-        {{ $row['jam_siswa'] }}
+@php
 
-    @else
+$jam = strtotime($row['jam_siswa']);
 
-        -
+@endphp
 
-    @endif
+{{ $jam ? date('H:i:s',$jam) : '-' }}
+
+@else
+
+-
+
+@endif
 
 </td>
 
@@ -280,18 +283,21 @@ $kelasList = collect($data)
 <!-- JAM ORTU -->
 <td class="p-4 text-gray-600">
 
-    @if(
-        !empty($row['jam_ortu']) &&
-        strtotime($row['jam_ortu'])
-    )
+@if(!empty($row['jam_ortu']))
 
-        {{ $row['jam_ortu'] }}
+@php
 
-    @else
+$jam = strtotime($row['jam_ortu']);
 
-        -
+@endphp
 
-    @endif
+{{ $jam ? date('H:i:s',$jam) : '-' }}
+
+@else
+
+-
+
+@endif
 
 </td>
 
@@ -355,13 +361,7 @@ const chart = new Chart(ctx, {
 
 });
 
-
-// FILTER KELAS
-
 const filterKelas = document.getElementById('filterKelas');
-
-
-// CARD ELEMENT
 
 const totalDataEl = document.querySelectorAll('.text-3xl')[0];
 
@@ -372,10 +372,9 @@ const ortuHadirEl = document.querySelectorAll('.text-3xl')[2];
 const belumHadirEl = document.querySelectorAll('.text-3xl')[3];
 
 
+function applyFilter() {
 
-filterKelas.addEventListener('change', function () {
-
-    const selected = this.value;
+    const selected = filterKelas.value;
 
     const rows = document.querySelectorAll('.data-row');
 
@@ -391,23 +390,25 @@ filterKelas.addEventListener('change', function () {
 
         const kelas = row.dataset.kelas;
 
-        const statusSiswa = row.querySelectorAll('td')[2]
+        const statusSiswa =
+            row.querySelectorAll('td')[2]
             .innerText
             .includes('Hadir');
 
-        const statusOrtu = row.querySelectorAll('td')[5]
+        const statusOrtu =
+            row.querySelectorAll('td')[5]
             .innerText
             .includes('Hadir');
 
         const show =
-            selected === 'all' ||
-            kelas === selected;
+            selected === 'all'
+            || kelas === selected;
 
         if (show) {
 
             row.style.display = '';
 
-            total+= 2;
+            total += 2;
 
             if (statusSiswa) {
 
@@ -437,8 +438,6 @@ filterKelas.addEventListener('change', function () {
 
     });
 
-    // UPDATE CARD
-
     totalDataEl.innerText = total;
 
     siswaHadirEl.innerText = siswaHadir;
@@ -447,18 +446,52 @@ filterKelas.addEventListener('change', function () {
 
     belumHadirEl.innerText = belum;
 
-
-    // UPDATE CHART
-
     chart.data.datasets[0].data = [
+
         siswaHadir,
         ortuHadir,
         belum
+
     ];
 
     chart.update();
 
-});
+    // SIMPAN FILTER
+    localStorage.setItem(
+        'filterKelas',
+        selected
+    );
+
+}
+
+
+// SAAT GANTI FILTER
+filterKelas.addEventListener(
+    'change',
+    applyFilter
+);
+
+
+// LOAD FILTER SETELAH REFRESH
+window.addEventListener(
+    'load',
+    function() {
+
+        const saved =
+            localStorage.getItem(
+                'filterKelas'
+            );
+
+        if(saved){
+
+            filterKelas.value = saved;
+
+        }
+
+        applyFilter();
+
+    }
+);
 
 </script>
 
