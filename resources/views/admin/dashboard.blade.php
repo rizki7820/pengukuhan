@@ -235,23 +235,11 @@ $kelasList = collect($data)
 
                         <!-- JAM SISWA -->
 <td class="p-4 text-gray-600">
-
 @if(!empty($row['jam_siswa']))
-
-@php
-
-$jam = strtotime($row['jam_siswa']);
-
-@endphp
-
-{{ $jam ? date('H:i:s',$jam) : '-' }}
-
+    {{ trim($row['jam_siswa']) }}
 @else
-
--
-
+    -
 @endif
-
 </td>
 
 <!-- NAMA ORTU -->
@@ -282,23 +270,11 @@ $jam = strtotime($row['jam_siswa']);
 
 <!-- JAM ORTU -->
 <td class="p-4 text-gray-600">
-
 @if(!empty($row['jam_ortu']))
-
-@php
-
-$jam = strtotime($row['jam_ortu']);
-
-@endphp
-
-{{ $jam ? date('H:i:s',$jam) : '-' }}
-
+    {{ trim($row['jam_ortu']) }}
 @else
-
--
-
+    -
 @endif
-
 </td>
 
                     </tr>
