@@ -167,7 +167,7 @@ $kelasList = collect($data)
                             Nama Siswa
                         </th>
 
-                        <th class="p-4 text-left">
+                        <th class="p-2 text-left">
                             Kelas
                         </th>
 
@@ -210,7 +210,7 @@ $kelasList = collect($data)
                         </td>
 
                         <!-- KELAS -->
-                        <td class="p-4">
+                        <td class="p-2">
                             {{ $row['kelas'] ?? '-' }}
                         </td>
 
