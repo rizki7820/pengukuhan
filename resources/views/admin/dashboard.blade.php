@@ -163,11 +163,11 @@ $kelasList = collect($data)
 
                     <tr>
 
-                        <th class="p-4 text-left">
+                        <th class="p-4 w-16 text-left">
                             Nama Siswa
                         </th>
 
-                        <th class="p-2 text-left">
+                        <th class="p-2 w-10 text-left">
                             Kelas
                         </th>
 
